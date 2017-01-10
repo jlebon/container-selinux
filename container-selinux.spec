@@ -3,9 +3,9 @@
 # container-selinux
 %global git0 https://github.com/projectatomic/container-selinux
 %if 0%{?fedora}
-%global commit0 e06212c96d71174bf4085f8e3704b4805c668625
+%global commit0 9268f1d1d966aa1ffe6e8d20617b2597af4a1962
 %else
-%global commit0 e06212c96d71174bf4085f8e3704b4805c668625
+%global commit0 9268f1d1d966aa1ffe6e8d20617b2597af4a1962
 %endif
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 
