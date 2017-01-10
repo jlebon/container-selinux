@@ -34,8 +34,8 @@ Name: container-selinux
 %if 0%{?fedora} || 0%{?centos}
 Epoch: 2
 %endif
-Version: 2.1
-Release: 1%{?dist}
+Version: 2.2
+Release: 2%{?dist}
 License: GPLv2
 URL: %{git0}
 Summary: SELinux policies for container runtimes
@@ -89,10 +89,15 @@ if [ $1 -eq 1 ]; then
     %{_sbindir}/setsebool -P -N virt_use_nfs=1 virt_sandbox_use_all_caps=1
 fi
 %_format MODULES %{_datadir}/selinux/packages/$x.pp.bz2
-%{_sbindir}/semodule -n -s %{selinuxtype} -r container 2> /dev/null
-%{_sbindir}/semodule -n -s %{selinuxtype} -d %{repo} 2> /dev/null
-%{_sbindir}/semodule -n -s %{selinuxtype} -d gear 2> /dev/null
-%{_sbindir}/semodule -n -X 200 -s %{selinuxtype} -i $MODULES > /dev/null
+echo running -r container
+%{_sbindir}/semodule -n -s %{selinuxtype} -r container
+echo running -d docker
+%{_sbindir}/semodule -n -s %{selinuxtype} -d docker
+echo running -d gear
+%{_sbindir}/semodule -n -s %{selinuxtype} -d gear
+echo running -i $MODULES
+%{_sbindir}/semodule -n -X 200 -s %{selinuxtype} -i $MODULES
+echo done
 if %{_sbindir}/selinuxenabled ; then
     %{_sbindir}/load_policy
     %relabel_files
